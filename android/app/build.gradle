@@ -45,13 +45,28 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.sample.simpsonsviewer.anywhere"
+        applicationId "com.sample"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+    }
+
+    flavorDimensions "app"
+
+    productFlavors {
+        wireviewer {
+            dimension "app"
+            applicationIdSuffix ".wireviewer"
+            resValue "string", "app_name", "The Wire Character Viewer"
+        }
+        simpsonsviewer {
+            dimension "app"
+            applicationIdSuffix ".simpsonsviewer"
+            resValue "string", "app_name", "Simpsons Character Viewer"
+        }
     }
 
     buildTypes {
