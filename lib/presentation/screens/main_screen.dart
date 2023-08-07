@@ -1,8 +1,10 @@
 import 'package:anywhere/domain_layer/cubits/characters_cubit.dart';
+import 'package:anywhere/presentation/screens/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain_layer/cubits/characters_state.dart';
+import '../widgets/character_list_with_details_widget.dart';
 import '../widgets/characters_list_widget.dart';
 
 /// Main screen of the application. Depending on the screen width displays data
@@ -11,9 +13,12 @@ import '../widgets/characters_list_widget.dart';
 /// details;
 ///  * list of characters with the description of the selected tile.
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key, required this.title});
-
   final String title;
+
+  const MainScreen({
+    super.key,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +34,22 @@ class MainScreen extends StatelessWidget {
               )
             : LayoutBuilder(builder: (context, constraints) {
                 if (constraints.maxWidth > 600) {
-                  return const Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: CharactersListWidget(),
-                      ),
-                      Flexible(
-                        flex: 3,
-                        child: CharactersListWidget(),
-                      ),
-                    ],
-                  );
+                  return const CharactersListWithDetailsWidget();
                 } else {
-                  return const CharactersListWidget();
+                  return CharactersListWidget(
+                    characterSelected: (index) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => DetailsScreen(
+                            character: context
+                                .read<CharactersCubit>()
+                                .state
+                                .characters[index],
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 }
               }),
       ),

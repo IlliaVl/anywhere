@@ -5,7 +5,15 @@ import '../../domain_layer/cubits/characters_cubit.dart';
 
 /// Widget responsible for displaying list of characters.
 class CharactersListWidget extends StatelessWidget {
-  const CharactersListWidget({super.key});
+  final ValueChanged<int> characterSelected;
+
+  final int? selectedCharacterIndex;
+
+  const CharactersListWidget({
+    super.key,
+    required this.characterSelected,
+    this.selectedCharacterIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +22,13 @@ class CharactersListWidget extends StatelessWidget {
     return ListView.builder(
       itemCount: state.characters.length,
       itemBuilder: (context, index) => Card(
-        child: ListTile(
-          title: Text(
-            state.characters[index].name ?? '',
+        color: index == selectedCharacterIndex ? Colors.white70 : null,
+        child: InkWell(
+          onTap: () => characterSelected(index),
+          child: ListTile(
+            title: Text(
+              state.characters[index].name ?? '',
+            ),
           ),
         ),
       ),
