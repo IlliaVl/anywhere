@@ -1,22 +1,22 @@
 class Character {
   final String? name;
   final String? description;
-  final String? icon;
+  final String? imageUrl;
 
   Character({
     this.name,
     this.description,
-    this.icon,
+    this.imageUrl,
   });
 
   Character copyWith({
     String? name,
     String? description,
-    String? icon,
+    String? imageUrl,
   }) =>
       Character(
         name: name ?? this.name,
         description: description ?? this.description,
-        icon: icon ?? this.icon,
+        imageUrl: imageUrl ?? this.imageUrl,
       );
 }

@@ -1,3 +1,4 @@
+import 'package:anywhere/presentation/widgets/constrained_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,24 +17,34 @@ class CharacterDetailsWidget extends StatelessWidget {
         ? Container()
         : Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text(
-                  selectedCharacter.name ?? '',
-                  style: const TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    selectedCharacter.name ?? '',
+                    style: const TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                Text(
-                  selectedCharacter.description ?? '',
-                  style: const TextStyle(
-                    fontSize: 24.0,
-                    fontStyle: FontStyle.italic,
+                  const SizedBox(height: 16.0),
+                  if (selectedCharacter.imageUrl?.isNotEmpty ?? false) ...[
+                    ConstrainedNetworkImage(
+                      imageUrl: selectedCharacter.imageUrl!,
+                      imageHeight: 100,
+                      imageWidth: 100,
+                    ),
+                    const SizedBox(height: 16.0),
+                  ],
+                  Text(
+                    selectedCharacter.description ?? '',
+                    style: const TextStyle(
+                      fontSize: 24.0,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
   }
