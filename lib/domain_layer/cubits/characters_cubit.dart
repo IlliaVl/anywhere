@@ -3,10 +3,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../base_repository/characters_repository_interface.dart';
-import '../models/characters_error.dart';
 import 'characters_state.dart';
 
-/// Cubit responsible for retrieving the list of [Character].
 class CharactersCubit extends Cubit<CharactersState> {
   final CharactersRepositoryInterface _repository;
 
@@ -37,10 +35,10 @@ class CharactersCubit extends Cubit<CharactersState> {
           error: CharactersStateErrors.none,
         ),
       );
-    } on CharactersException {
+    } catch (_) {
       emit(
         state.copyWith(
-          busy: true,
+          busy: false,
           error: CharactersStateErrors.generic,
         ),
       );

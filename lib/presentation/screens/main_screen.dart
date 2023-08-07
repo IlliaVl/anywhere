@@ -27,7 +27,15 @@ class MainScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: BlocBuilder<CharactersCubit, CharactersState>(
+      body: BlocConsumer<CharactersCubit, CharactersState>(
+        listener: (context, state) {
+          if (state.error != CharactersStateErrors.none) {
+            _showError(
+              context,
+              'Something went wrong. Try later, please.',
+            );
+          }
+        },
         builder: (context, state) => state.busy
             ? const Center(
                 child: CircularProgressIndicator(),
@@ -51,6 +59,25 @@ class MainScreen extends StatelessWidget {
                   );
                 }
               }),
+      ),
+    );
+  }
+
+  void _showError(
+    BuildContext context,
+    String text,
+  ) {
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Warning'),
+        content: Text(text),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
       ),
     );
   }
