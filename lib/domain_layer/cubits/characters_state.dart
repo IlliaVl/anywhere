@@ -3,28 +3,39 @@ import 'dart:collection';
 import 'package:anywhere/domain_layer/models/character.dart';
 import 'package:equatable/equatable.dart';
 
-/// Represents the state of [CharactersCubit]
+/// Represents the state of [CharactersCubit].
 class CharactersState extends Equatable {
   /// True if the cubit is processing something.
   final bool busy;
 
-  /// List of [Character]
+  /// List of [Character]s.
   final UnmodifiableListView<Character> characters;
 
-  /// Error message for the last occurred error
+  /// List of searched [Character]s.
+  final UnmodifiableListView<Character> searchCharacters;
+
+  /// Selected character.
+  final Character? selectedCharacter;
+
+  /// Error message for the last occurred error.
   final CharactersStateErrors error;
 
-  /// Creates a new instance of [CharactersState]
+  /// Creates a new instance of [CharactersState].
   CharactersState({
     this.busy = false,
     Iterable<Character> characters = const [],
+    Iterable<Character> searchCharacters = const [],
+    this.selectedCharacter,
     this.error = CharactersStateErrors.none,
-  }) : characters = UnmodifiableListView(characters);
+  })  : characters = UnmodifiableListView(characters),
+        searchCharacters = UnmodifiableListView(searchCharacters);
 
   @override
   List<Object?> get props => [
         busy,
         characters,
+        searchCharacters,
+        selectedCharacter,
         error,
       ];
 
@@ -32,11 +43,15 @@ class CharactersState extends Equatable {
   CharactersState copyWith({
     bool? busy,
     Iterable<Character>? characters,
+    Iterable<Character>? searchCharacters,
+    Character? selectedCharacter,
     CharactersStateErrors? error,
   }) {
     return CharactersState(
       busy: busy ?? this.busy,
       characters: characters ?? this.characters,
+      searchCharacters: searchCharacters ?? this.searchCharacters,
+      selectedCharacter: selectedCharacter ?? this.selectedCharacter,
       error: error ?? this.error,
     );
   }

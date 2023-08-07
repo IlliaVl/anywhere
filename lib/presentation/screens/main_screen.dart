@@ -38,13 +38,12 @@ class MainScreen extends StatelessWidget {
                 } else {
                   return CharactersListWidget(
                     characterSelected: (index) {
+                      context.read<CharactersCubit>().selectCharacter(index);
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => DetailsScreen(
-                            character: context
-                                .read<CharactersCubit>()
-                                .state
-                                .characters[index],
+                          builder: (_) => BlocProvider.value(
+                            value: context.read<CharactersCubit>(),
+                            child: const DetailsScreen(),
                           ),
                         ),
                       );

@@ -7,19 +7,10 @@ import 'characters_list_widget.dart';
 
 /// Widget responsible for displaying list of characters
 /// with details of the selected one.
-class CharactersListWithDetailsWidget extends StatefulWidget {
+class CharactersListWithDetailsWidget extends StatelessWidget {
   const CharactersListWithDetailsWidget({
     super.key,
   });
-
-  @override
-  State<CharactersListWithDetailsWidget> createState() =>
-      _CharactersListWithDetailsWidgetState();
-}
-
-class _CharactersListWithDetailsWidgetState
-    extends State<CharactersListWithDetailsWidget> {
-  int selectedCharacterIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +19,13 @@ class _CharactersListWithDetailsWidgetState
         Flexible(
           flex: 1,
           child: CharactersListWidget(
-            selectedCharacterIndex: selectedCharacterIndex,
-            characterSelected: (index) =>
-                setState(() => selectedCharacterIndex = index),
+            showSelectedCharacter: true,
+            characterSelected: context.read<CharactersCubit>().selectCharacter,
           ),
         ),
-        Flexible(
+        const Flexible(
           flex: 3,
-          child: CharacterDetailsWidget(
-            character: context
-                .read<CharactersCubit>()
-                .state
-                .characters[selectedCharacterIndex],
-          ),
+          child: CharacterDetailsWidget(),
         ),
       ],
     );
