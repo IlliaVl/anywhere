@@ -5,7 +5,7 @@ import '../dtos/related_topic_dto.dart';
 extension RelatedTopicDTOMapping on RelatedTopicDTO {
   /// Maps into a [Bill]
   Character toCharacter() => Character(
-        name: text,
+        name: text?.split(' - ').first,
         description: text,
         icon: icon?.url,
       );
