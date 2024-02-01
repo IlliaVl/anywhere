@@ -48,6 +48,13 @@ class CharactersListWidget extends StatelessWidget {
                     child: ListTile(
                       title: Text(
                         state.searchCharacters[index].name ?? '',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      subtitle: Text(
+                        state.searchCharacters[index].description ?? '',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),
